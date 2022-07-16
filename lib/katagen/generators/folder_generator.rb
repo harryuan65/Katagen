@@ -5,7 +5,7 @@ require "fileutils"
 module Katagen
   # Mkdir ifne
   class FolderGenerator
-    def self.perform!(dir_path)
+    def self.perform(dir_path)
       if File.directory?(dir_path)
         puts "Already exists: "
       else

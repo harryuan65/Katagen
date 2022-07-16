@@ -4,7 +4,7 @@ module Katagen
   class CLI < Thor
     desc "new LEETCODE_URL", "create a folder to record your answer for the leet code question"
     def new(url)
-      SolutionGenerator.perform!(url)
+      SolutionGenerator.perform(url)
     end
   end
 end

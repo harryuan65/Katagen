@@ -3,7 +3,7 @@
 module Katagen
   # Generate a file ifne with custom body
   class FileGenerator
-    def self.perform!(path, &block)
+    def self.perform(path, &block)
       if File.exist?(path)
         puts "Already exists: #{path}"
       else

@@ -9,7 +9,7 @@ module Katagen
   # Generates a solution
   class SolutionGenerator
     class << self
-      def perform!(question_url)
+      def perform(question_url)
         topic = question_url[%r{https://leetcode.com/problems/(?<topic>[a-z0-9-]+)}, :topic]
         raise InvalidLeetCodeUrl unless topic
 
@@ -22,9 +22,9 @@ module Katagen
         solution_path = File.join(kata_root, "solution.rb")
         solution_spec_path = File.join(kata_root, "solution_spec.rb")
 
-        FolderGenerator.perform!(kata_root)
-        FileGenerator.perform!(solution_path)
-        FileGenerator.perform!(solution_spec_path) do |f|
+        FolderGenerator.perform(kata_root)
+        FileGenerator.perform(solution_path)
+        FileGenerator.perform(solution_spec_path) do |f|
           @method = "#solution"
           template = File.read(relative_path("../templates/solution_spec.rb.erb"))
           result = ERB.new(template).result(binding)

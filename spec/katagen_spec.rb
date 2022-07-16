@@ -29,20 +29,20 @@ RSpec.describe Katagen do
   QUESTIONS.each do |questions|
     it "creates a folder for #{questions[:difficulty]} leet code questions" do
       id, title, difficulty, url = questions.values_at(:id, :title, :difficulty, :url)
-      Katagen::SolutionGenerator.perform!(url)
+      Katagen::SolutionGenerator.perform(url)
       expect(File.directory?("./#{difficulty}/#{id}.#{title}")).to be(true)
     end
   end
 
   it "raises error when url malformed" do
     expect do
-      Katagen::SolutionGenerator.perform!("https://leectode.com/prbolem/tws-oum")
+      Katagen::SolutionGenerator.perform("https://leectode.com/prbolem/tws-oum")
     end.to raise_error(/invalid/)
   end
 
   it "raises error when question does not exist" do
     expect do
-      Katagen::SolutionGenerator.perform!("https://leetcode.com/problems/fresh_avocado")
+      Katagen::SolutionGenerator.perform("https://leetcode.com/problems/fresh_avocado")
     end.to raise_error(/does not exist/)
   end
 
