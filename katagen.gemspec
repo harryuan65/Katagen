@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_runtime_dependency "thor", "~> 1.0"
+  spec.add_runtime_dependency "erb", "~> 2.2.0"
 
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
