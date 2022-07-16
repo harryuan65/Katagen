@@ -4,6 +4,8 @@
 
 ## Installation
 
+> NOTE: this is still wip and it not yet available on rubygems.org
+
 Add this line to your application's Gemfile:
 
 ```ruby
