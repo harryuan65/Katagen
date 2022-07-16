@@ -7,7 +7,7 @@ module Katagen
   class FolderGenerator
     def self.perform(dir_path)
       if File.directory?(dir_path)
-        puts "Already exists: "
+        puts "Dir already exists: #{dir_path}"
       else
         puts "Creating dir #{dir_path}"
         FileUtils.mkdir_p(dir_path)
