@@ -22,8 +22,6 @@ QUESTIONS = [
 ].freeze
 
 RSpec.describe Katagen do
-  let(:example_not_existing_url) { "https://leetcode.com/problems/fresh-avocado/" }
-
   it "has a version number" do
     expect(Katagen::VERSION).not_to be nil
   end
@@ -34,6 +32,18 @@ RSpec.describe Katagen do
       Katagen::SolutionGenerator.perform!(url)
       expect(File.directory?("./#{difficulty}/#{id}.#{title}")).to be(true)
     end
+  end
+
+  it "raises error when url malformed" do
+    expect do
+      Katagen::SolutionGenerator.perform!("https://leectode.com/prbolem/tws-oum")
+    end.to raise_error(/invalid/)
+  end
+
+  it "raises error when question does not exist" do
+    expect do
+      Katagen::SolutionGenerator.perform!("https://leetcode.com/problems/fresh_avocado")
+    end.to raise_error(/does not exist/)
   end
 
   after(:all) do
