@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "fileutils"
+
 module Katagen
   # Mkdir ifne
   class FolderGenerator
