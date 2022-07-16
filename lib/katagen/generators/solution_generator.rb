@@ -13,18 +13,18 @@ module Katagen
 
       summary = JSON.parse(File.read("./question_summary.json"))[topic]
       id, difficulty = summary.values_at("id", "difficulty")
-      root = File.join(difficulty, "#{id}.#{topic}")
+      kata_root = File.join(difficulty, "#{id}.#{topic}")
 
-      FolderGenerator.perform!(root)
-      FileGenerator.perform!(File.join(root, "solution.rb"))
-      FileGenerator.perform!(File.join(root, "#{topic}.md")) do |f|
+      FolderGenerator.perform!(kata_root)
+      FileGenerator.perform!(File.join(kata_root, "solution.rb"))
+      FileGenerator.perform!(File.join(kata_root, "#{topic}.md")) do |f|
         @url = question_url
         template = File.read("./templates/solution.md.erb")
         result = ERB.new(template).result(binding)
         f.write(result)
       end
-      FolderGenerator.perform!(File.join(root, "images"))
-      FileGenerator.perform!(File.join(root, "solution_spec.rb")) do |f|
+      FolderGenerator.perform!(File.join(kata_root, "images"))
+      FileGenerator.perform!(File.join(kata_root, "solution_spec.rb")) do |f|
         @method = "#solution"
         template = File.read("./templates/solution_spec.rb.erb")
         result = ERB.new(template).result(binding)
