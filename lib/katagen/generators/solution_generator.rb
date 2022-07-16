@@ -4,16 +4,18 @@ require "json"
 require "erb"
 require_relative "file_generator"
 require_relative "folder_generator"
-
+require_relative "exceptions"
 module Katagen
   # Generates a solution
   class SolutionGenerator
     class << self
       def perform!(question_url)
         topic = question_url[%r{https://leetcode.com/problems/(?<topic>[a-z0-9-]+)}, :topic]
-        raise "Unprocessable url" unless topic
+        raise InvalidLeetCodeUrl unless topic
 
         summary = questions_summary[topic]
+        raise QuestionNotExist.new(topic) unless summary
+
         id, difficulty = summary.values_at("id", "difficulty")
 
         kata_root = File.join(difficulty, "#{id}.#{topic}")
