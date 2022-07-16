@@ -20,7 +20,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+```bash
+katagen new <leetcode_url> <lang>
+katagen new https://leetcode.com/problems/isomorphic-strings/
+katagen new https://leetcode.com/problems/isomorphic-strings/ js
+```
+
+`<lang>` [options] is the solution file extension, omitting will default to "rb" (ruby).
 
 ## Development
 
