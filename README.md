@@ -1,10 +1,11 @@
 # Katagen
 
-[WIP] Generate folders for leet code practices.
+Generate folders for LeetCode practices. This gem is meant to create a solution file for each practice, so you can compare differenct trains of thought to the problem.
+
 
 ## Installation
 
-> NOTE: this is still wip and it not yet available on rubygems.org
+> NOTE: this is currently for personal use and is not on rubygems.org yet. If you still want to try you can use bundler:
 
 ```ruby
 gem 'katagen', git: "https://github.com/harryuan65/Katagen.git"
