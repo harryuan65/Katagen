@@ -9,16 +9,35 @@ module Katagen
   # Generates a solution
   class SolutionGenerator
     class << self
-      def perform(question_url, lang_ext = "rb")
-        topic = question_url[%r{https://leetcode.com/problems/(?<topic>[a-z0-9-]+)}, :topic]
+      def perform(input_url, lang_ext = "rb")
+        topic = filter_topic(input_url)
+        summary = fetch_summary(topic)
+        kata_root = build_kata_root(summary, topic)
+        create_question_package(kata_root, lang_ext)
+      end
+
+      private
+
+      def filter_topic(input_url)
+        topic = input_url[%r{https://leetcode.com/problems/(?<topic>[a-z0-9-]+)}, :topic]
         raise InvalidLeetCodeUrl unless topic
 
+        topic
+      end
+
+      def fetch_summary(topic)
         summary = questions_summary[topic]
         raise QuestionNotExist.new(topic) unless summary
 
-        id, difficulty = summary.values_at("id", "difficulty")
+        summary
+      end
 
-        kata_root = File.join(difficulty, "#{id}.#{topic}")
+      def build_kata_root(summary, topic)
+        id, difficulty = summary.values_at("id", "difficulty")
+        "#{difficulty}/#{id}.#{topic}"
+      end
+
+      def create_question_package(kata_root, lang_ext)
         solution_path = File.join(kata_root, "solution.#{lang_ext}")
         solution_spec_path = File.join(kata_root, "solution_spec.#{lang_ext}")
 
@@ -33,8 +52,6 @@ module Katagen
           end
         end
       end
-
-      private
 
       def questions_summary
         @summary ||= begin
