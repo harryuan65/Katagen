@@ -34,6 +34,9 @@ module Katagen
         solution_path = File.join(kata_root, "solution.#{@lang_ext}")
         template_path = File.join(File.dirname(__FILE__), "../templates/solution.#{@lang_ext}.erb")
 
+        @timestamp = Time.now.iso8601
+        @title = kata_root
+
         if File.exist?(template_path)
           generate_file(solution_path, dup_when_exists: true) do |file|
             write_template(file, template_path)
