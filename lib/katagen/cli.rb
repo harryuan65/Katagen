@@ -1,14 +1,16 @@
 require "thor"
-require_relative "generators/solution_generator"
+require_relative "command"
 module Katagen
+  # Command CLI
+  # :reek:UtilityFunction
   class CLI < Thor
-    desc "new <leetcode_url> <lang>", "create a folder to record your answer for the leet code question"
+    desc "leetcode <leetcode_question_id> <lang>", "create a folder to record your answer for the leet code question"
     long_desc <<~DESC
-      <leetcode_url>: leetcode question url, ex: https://leetcode.com/problems/isomorphic-strings/ \n
+      <leetcode_question_id>: leetcode question id, ex: 1 \n
       <lang>: [optional] solution file extension, defaults to "rb" (ruby)
     DESC
-    def new(url, lang = "rb")
-      SolutionGenerator.perform(url, lang)
+    def leetcode(input_id, lang = "rb")
+      Katagen::Command.leetcode(input_id, lang)
     end
   end
 end
