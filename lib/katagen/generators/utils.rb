@@ -1,3 +1,4 @@
+require "fileutils"
 module Katagen
   module Generators
     # Common path utilities :reek:UtilityFunction
@@ -6,9 +7,9 @@ module Katagen
       def generate_file(path, options = {}, &block)
         if !File.exist?(path)
         elsif options[:dup_when_exists]
-          _, folder, file, ext = path.match(/(.+)\/(.+)\.(.+)\Z/).to_a
-          count = Dir["#{folder}/*"].count { |file| file.match(/#{file}\d*\.#{ext}/) }
-          path = "#{folder}/#{file}#{count + 1}.#{ext}"
+          _, folder, target_file, ext = path.match(/(.+)\/(.+)\.(.+)\Z/).to_a
+          count = Dir["#{folder}/*"].count { |file| file.match(/#{target_file}\d*\.#{ext}/) }
+          path = "#{folder}/#{target_file}#{count + 1}.#{ext}"
         else
           puts "[Warning] File already exists: #{path}, skipping..."
           return nil
