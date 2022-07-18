@@ -1,4 +1,4 @@
-require_relative './solution'
+require_relative "./solution"
 
 TEST_CASES = [
   {
@@ -11,7 +11,7 @@ TEST_CASES = [
   }
 ].freeze
 
-RSpec.describe '#solution' do
+RSpec.describe "#solution" do
   TEST_CASES.each do |tc|
     case tc
     in { input: input, output: output}
