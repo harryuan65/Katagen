@@ -1,4 +1,4 @@
-RSpec.shared_context "clean test folders" do
+RSpec.shared_context "clean up test folders" do
   after do
     FileUtils.rm_rf("./easy")
     FileUtils.rm_rf("./medium")
