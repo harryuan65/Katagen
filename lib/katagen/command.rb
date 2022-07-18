@@ -9,9 +9,8 @@ module Katagen
   #
   class Command
     def self.leetcode(input_id, lang = "rb")
-      strategy = Strategy::LeetCode.new(input_id)
-      solution = Generators::Solution.new(strategy, lang)
-      solution.perform
+      solution = Generators::Solution.new(Strategy::LeetCode.new(input_id), lang)
+      solution.create_package
     end
   end
 end

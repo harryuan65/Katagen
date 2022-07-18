@@ -2,6 +2,7 @@
 
 require "json"
 require "erb"
+require "time"
 require_relative "utils"
 
 module Katagen
@@ -20,26 +21,43 @@ module Katagen
         @lang_ext = lang_ext
       end
 
-      def perform
-        create_question_package(@strategy.build_kata_dirname)
+      def create_package
+        kata_root = @strategy.build_kata_dirname
+        generate_folder(kata_root)
+        create_solution(kata_root)
+        create_solution_spec(kata_root)
       end
 
       private
 
-      def create_question_package(kata_root)
+      def create_solution(kata_root)
         solution_path = File.join(kata_root, "solution.#{@lang_ext}")
-        solution_spec_path = File.join(kata_root, "solution_spec.#{@lang_ext}")
+        template_path = File.join(File.dirname(__FILE__), "../templates/solution.#{@lang_ext}.erb")
 
-        generate_folder(kata_root)
-        generate_file(solution_path, dup_when_exists: true)
-        generate_file(solution_spec_path) do |file|
-          template_path = File.join(File.dirname(__FILE__), "../templates/solution_spec.#{@lang_ext}.erb")
-          if File.exist?(template_path)
-            template = File.read(template_path)
-            result = ERB.new(template).result(binding)
-            file.write(result)
+        if File.exist?(template_path)
+          generate_file(solution_path, dup_when_exists: true) do |file|
+            write_template(file, template_path)
           end
         end
+      end
+
+      def create_solution_spec(kata_root)
+        solution_spec_path = File.join(kata_root, "solution_spec.#{@lang_ext}")
+        template_path = File.join(File.dirname(__FILE__), "../templates/solution_spec.#{@lang_ext}.erb")
+
+        if File.exist?(template_path)
+          generate_file(solution_spec_path) do |file|
+            write_template(file, template_path)
+          end
+        end
+      end
+
+      private
+
+      def write_template(file, template_path)
+        template = File.read(template_path)
+        result = ERB.new(template).result(binding)
+        file.write(result)
       end
     end
   end
