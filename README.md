@@ -22,14 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-
 ```bash
-katagen new <leetcode_url> <lang>
-katagen new https://leetcode.com/problems/isomorphic-strings/
-katagen new https://leetcode.com/problems/isomorphic-strings/ js
+katagen leetcode <leetcode_question_id> <lang>
+katagen leetcode 1480
+katagen leetcode 1480 js
 ```
 
-`<lang>` [options] is the solution file extension, omitting will default to "rb" (ruby).
+> `<lang>` [options] is the solution file extension, omitting will default to "rb" (ruby).
+
+This will create:
+
+```
+medium
+└── 1480.rearrange-words-in-a-sentence
+    ├── solution.rb
+    └── solution_spec.rb
+```
+
+If you run it twice, it will create `solution2.rb`, etc.
+
+```
+medium
+└── 1480.rearrange-words-in-a-sentence
+    ├── solution.rb
+    ├── solution2.rb
+    └── solution_spec.rb
+```
 
 ## Development
 
