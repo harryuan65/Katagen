@@ -6,19 +6,13 @@
 
 > NOTE: this is still wip and it not yet available on rubygems.org
 
-Add this line to your application's Gemfile:
-
 ```ruby
-gem 'katagen'
+gem 'katagen', git: "https://github.com/harryuan65/Katagen.git"
 ```
 
 And then execute:
 
     $ bundle install
-
-Or install it yourself as:
-
-    $ gem install katagen
 
 ## Usage
 
