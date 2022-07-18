@@ -37,10 +37,8 @@ module Katagen
         @timestamp = Time.now.iso8601
         @title = kata_root
 
-        if File.exist?(template_path)
-          generate_file(solution_path, dup_when_exists: true) do |file|
-            write_template(file, template_path)
-          end
+        generate_file(solution_path, dup_when_exists: true) do |file|
+          write_template(file, template_path) if File.exist?(template_path)
         end
       end
 
@@ -48,10 +46,8 @@ module Katagen
         solution_spec_path = File.join(kata_root, "solution_spec.#{@lang_ext}")
         template_path = File.join(File.dirname(__FILE__), "../templates/solution_spec.#{@lang_ext}.erb")
 
-        if File.exist?(template_path)
-          generate_file(solution_spec_path) do |file|
-            write_template(file, template_path)
-          end
+        generate_file(solution_spec_path) do |file|
+          write_template(file, template_path) if File.exist?(template_path)
         end
       end
 
