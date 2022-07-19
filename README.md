@@ -1,5 +1,7 @@
 # Katagen
 
+![CI](https://github.com/harryuan65/Katagen/workflows/Test/badge.svg)
+
 Generate folders for LeetCode practices. This gem is meant to create a solution file for each practice, so you can compare differenct trains of thought to the problem.
 
 
