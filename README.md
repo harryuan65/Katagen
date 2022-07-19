@@ -19,9 +19,9 @@ And then execute:
 ## Usage
 
 ```bash
-katagen leetcode <leetcode_question_id> <lang>
-katagen leetcode 1480
-katagen leetcode 1480 js
+bundle exec katagen leetcode <leetcode_question_id> <lang>
+bundle exec katagen leetcode 1480
+bundle exec katagen leetcode 1480 js
 ```
 
 > `<lang>` [options] is the solution file extension, omitting will default to "rb" (ruby).
