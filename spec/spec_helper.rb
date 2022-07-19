@@ -14,5 +14,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  # hide puts messages
+  config.before do
+    allow($stdout).to receive(:puts)
+  end
+
   Dir[File.join(__dir__, "support/**/*.rb")].each { |f| require f }
 end

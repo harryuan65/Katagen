@@ -1,36 +1,44 @@
 # frozen_string_literal: true
 
-LEETCODE_QUESTIONS = [
-  {
-    id: "1",
-    title: "two-sum",
-    difficulty: "easy"
-  },
-  {
-    id: "2",
-    title: "add-two-numbers",
-    difficulty: "medium"
-  },
-  {
-    id: "4",
-    title: "median-of-two-sorted-arrays",
-    difficulty: "hard"
-  }
-].freeze
-
 RSpec.describe Katagen do
+  let(:id) { "1" }
+  let(:title) { "two-sum" }
+  let(:difficulty) { "easy" }
+  let(:question_root) { "./#{difficulty}/#{id}.#{title}" }
+  let(:default_ext) { "rb" }
+
   it "has a version number" do
     expect(Katagen::VERSION).not_to be nil
   end
 
-  include_context "clean up test folders"
+  context "with question folder not exist" do
+    before { Katagen::Command.leetcode(id) }
 
-  LEETCODE_QUESTIONS.each do |questions|
-    it "creates a folder for #{questions[:difficulty]} leet code questions" do
-      id, title, difficulty = questions.values_at(:id, :title, :difficulty)
-      Katagen::Command.leetcode(id)
-      expect(File.directory?("./#{difficulty}/#{id}.#{title}")).to be(true)
+    it "creates a folder a leet code questions" do
+      expect(File.directory?(question_root)).to be(true)
     end
+
+    it "has a solution file" do
+      expect(File.exist?("#{question_root}/solution.#{default_ext}")).to be(true)
+    end
+
+    it "has a solution_spec file" do
+      expect(File.exist?("#{question_root}/solution_spec.#{default_ext}")).to be(true)
+    end
+
+    include_context "clean up test folders after group"
+  end
+
+  context "with question folder already exists" do
+    before { Katagen::Command.leetcode(id) }
+
+    it "creates an additional solution file" do
+      expect do
+        Katagen::Command.leetcode(id)
+      end.to change { Dir["#{question_root}/solution*.#{default_ext}"].size }.from(2).to(3)
+    end
+
+    include_context "clean up test folders after group"
   end
 
   context "with question id out of range" do
