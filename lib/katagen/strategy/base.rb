@@ -4,8 +4,8 @@ module Katagen
     # @abstract Interface for question
     #
     class Base
-      # @return [String] path for directory
-      def build_kata_dirname = raise(NotImplementedError)
+      # @return [QuestionInfo] path for directory
+      def build_question_info = raise(NotImplementedError)
     end
   end
 end

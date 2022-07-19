@@ -1,3 +1,5 @@
+require_relative "../question_info"
+
 module Katagen
   module Strategy
     # :reek:U
@@ -18,14 +20,18 @@ module Katagen
         @input = input
       end
 
-      def build_kata_dirname
+      def build_question_info
         id = @input.to_i
         raise InvalidIndex.new(id) unless id.positive?
 
         summary = questions_summary[id - 1]
         raise QuestionNotExist.new(@input) unless summary
+        topic, difficulty = summary.values_at("topic", "difficulty")
 
-        "#{summary["difficulty"]}/#{id}.#{summary["topic"]}"
+        QuestionInfo.new(
+          "#{difficulty}/#{id}.#{topic}",
+          "https:/leetcode.com/problems/#{topic}"
+        )
       end
 
       private

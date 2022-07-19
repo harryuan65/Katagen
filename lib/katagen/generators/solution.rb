@@ -13,7 +13,7 @@ module Katagen
       #
       # Initialize generator with chosen method.
       #
-      # @param [#build_kata_dirname] strategy: instance of FromId or FromUrl
+      # @param [#build_question_info] strategy: instance of FromId or FromUrl
       # @param [String] lang_ext: chosen solution file extension, defaults to `rb`(ruby)
       #
       def initialize(strategy, lang_ext)
@@ -22,28 +22,29 @@ module Katagen
       end
 
       def create_package
-        kata_root = @strategy.build_kata_dirname
-        generate_folder(kata_root)
-        create_solution(kata_root)
-        create_solution_spec(kata_root)
+        question_info = @strategy.build_question_info
+        root = question_info.root
+        generate_folder(root)
+        create_solution(root, question_info.url)
+        create_solution_spec(root)
       end
 
       private
 
-      def create_solution(kata_root)
-        solution_path = File.join(kata_root, "solution.#{@lang_ext}")
+      def create_solution(root, url)
+        solution_path = File.join(root, "solution.#{@lang_ext}")
         template_path = File.join(File.dirname(__FILE__), "../templates/solution.#{@lang_ext}.erb")
 
         @timestamp = Time.now.iso8601
-        @title = kata_root
+        @url = url
 
         generate_file(solution_path, dup_when_exists: true) do |file|
           write_template(file, template_path) if File.exist?(template_path)
         end
       end
 
-      def create_solution_spec(kata_root)
-        solution_spec_path = File.join(kata_root, "solution_spec.#{@lang_ext}")
+      def create_solution_spec(root)
+        solution_spec_path = File.join(root, "solution_spec.#{@lang_ext}")
         template_path = File.join(File.dirname(__FILE__), "../templates/solution_spec.#{@lang_ext}.erb")
 
         generate_file(solution_spec_path) do |file|
