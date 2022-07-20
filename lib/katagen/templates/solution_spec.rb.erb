@@ -13,11 +13,14 @@ TEST_CASES = [
 ].freeze
 
 RSpec.describe FILE_NAME do
-  TEST_CASES.each do |tc|
-    case tc
-    in { input: input, output: output}
-      it "#{input}  =>  #{output}" do
-        # expect(___).to eq(output)
+  context TRAIN_OF_THOUGHT do
+    TEST_CASES.each do |tc|
+      case tc
+      in { input: input, output: output}
+        pending "TODO: assert solution output with expected"
+        # it "#{input}  =>  #{output}" do
+        #   expect(___).to eq(output)
+        # end
       end
     end
   end
