@@ -24,7 +24,7 @@ module Katagen
         id = @input.to_i
         raise InvalidIndex.new(id) unless id.positive?
 
-        summary = questions_summary[id - 1]
+        summary = questions_summary.find{ |q| q["id"] == id }
         raise QuestionNotExist.new(@input) unless summary
         topic, difficulty = summary.values_at("topic", "difficulty")
 
