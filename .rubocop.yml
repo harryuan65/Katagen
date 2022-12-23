@@ -1,0 +1,9 @@
+require:
+  - standard
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  DisabledByDefault: false
+  TargetRubyVersion: 3.0.3
