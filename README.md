@@ -2,29 +2,40 @@
 
 ![CI](https://github.com/harryuan65/Katagen/workflows/Test/badge.svg)
 
-Generate folders and some templates for LeetCode practices. This gem is meant to create a solution file for each practice, so you can compare different trains of thought to the problem.
+A small tool to generate folders and some templates for coding practices(currently, only for LeetCode). This gem creates a solution file for each practice, so you can compare different trains of thought to the problem.
 
 ## Installation
 
-> NOTE: this is currently for personal use and is not on rubygems.org yet. If you still want to try you can use bundler:
-
 ```ruby
-gem 'katagen', git: "https://github.com/harryuan65/Katagen.git"
+gem 'katagen', "~>1.0.1"
 ```
 
 And then execute:
 
     $ bundle install
 
-## Usage
+## Example
 
 ```bash
-bundle exec katagen leetcode <leetcode_question_id> <lang>
-bundle exec katagen leetcode 1480
-bundle exec katagen leetcode 1480 js
+Usage:
+  katagen leetcode <leetcode_question_id> [options]
+
+Options:
+  [--cwd=CWD]    # current working directory
+                 # Default: ./
+  [--lang=LANG]  # file extension for solution
+                 # Default: rb
 ```
 
-> `<lang>` [options] is the solution file extension, omitting will default to "rb" (ruby).
+### Binstubs
+
+You can use binstubs to type less:
+
+```bash
+bundle binstubs katagen
+bin/katagen leetcode 1480
+bin/katagen leetcode 1480 --cwd posts/Leetcode --lang md 
+```
 
 This will create:
 
