@@ -16,20 +16,18 @@ module Katagen
     # Generator for leetcode questions
     #
     class LeetCode
-      def initialize(input)
-        @input = input
+      def initialize(id)
+        @id = id.to_i
+        raise InvalidIndex.new(@id) unless @id.positive?
       end
 
       def build_question_info
-        id = @input.to_i
-        raise InvalidIndex.new(id) unless id.positive?
-
-        summary = questions_summary.find{ |q| q["id"] == id }
-        raise QuestionNotExist.new(@input) unless summary
+        summary = questions_summary.find { |q| q["id"] == @id }
+        raise QuestionNotExist.new(@id) unless summary
         topic, difficulty = summary.values_at("topic", "difficulty")
 
         QuestionInfo.new(
-          "#{difficulty}/#{id}.#{topic}",
+          "#{difficulty}/#{@id}.#{topic}",
           "https:/leetcode.com/problems/#{topic}"
         )
       end

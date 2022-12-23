@@ -8,8 +8,11 @@ module Katagen
   # Entry generator from cli
   #
   class Command
-    def self.leetcode(input_id, lang = "rb")
-      solution = Generators::Solution.new(Strategy::LeetCode.new(input_id), lang)
+    # @param [String] input_id: question id
+    # @param [Hash] options
+    # @option options [String] cwd: defaults to "./"
+    def self.leetcode(input_id, options = {})
+      solution = Generators::Solution.new(Strategy::LeetCode.new(input_id), options)
       solution.create_package
     end
   end

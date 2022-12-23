@@ -4,7 +4,7 @@ RSpec.describe Katagen do
   let(:id) { "1" }
   let(:title) { "two-sum" }
   let(:difficulty) { "easy" }
-  let(:question_root) { "./#{difficulty}/#{id}.#{title}" }
+  let(:question_root) { "#{difficulty}/#{id}.#{title}" }
   let(:default_ext) { "rb" }
 
   it "has a version number" do
@@ -52,6 +52,26 @@ RSpec.describe Katagen do
       expect do
         Katagen::Command.leetcode("100_000")
       end.to raise_error(/does not exist/)
+    end
+  end
+
+  context "provided custom cwd" do
+    let(:example_cwd) { "my_cwd" }
+    let(:final_root) { File.expand_path(File.join(example_cwd, question_root)) }
+
+    before do
+      FileUtils.mkdir_p(example_cwd)
+    end
+
+    it "creates package inside specified cwd" do
+      @expect_path = "#{final_root}/solution*.#{default_ext}" # my_cwd/easy/1.two-sum/solution*.rb
+      expect do
+        Katagen::Command.leetcode(id, {cwd: example_cwd})
+      end.to change { Dir[@expect_path].size }.from(0).to(2)
+    end
+
+    after do
+      FileUtils.rm_rf(example_cwd)
     end
   end
 end

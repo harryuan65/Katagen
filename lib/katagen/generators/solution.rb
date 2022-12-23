@@ -14,16 +14,23 @@ module Katagen
       # Initialize generator with chosen method.
       #
       # @param [#build_question_info] strategy: instance of FromId or FromUrl
-      # @param [String] lang_ext: chosen solution file extension, defaults to `rb`(ruby)
-      #
-      def initialize(strategy, lang_ext)
+      # @param [Hash] options: see cli.rb
+      # @option options [String] cwd current working directory, defaults is "./"
+      # @option options [String] lang_ext solution file extension, defaults to "rb" (ruby)
+      def initialize(strategy, options)
         @strategy = strategy
-        @lang_ext = lang_ext
+        @lang_ext = options[:lang] || "rb"
+        @cwd = options[:cwd] || "./"
       end
 
+      #
+      # Create the folder containing: solution.rb, solution_spec.rb (defaults to rb)
+      #
+      # @param [String] cwd: default to ./
+      #
       def create_package
         question_info = @strategy.build_question_info
-        root = question_info.root
+        root = File.expand_path(File.join(@cwd, question_info.root))
         generate_folder(root)
         create_solution(root, question_info.url)
         create_solution_spec(root)
